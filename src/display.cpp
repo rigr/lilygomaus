@@ -9,6 +9,7 @@
 
 // ========== Konstruktor ==========
 
+
 DisplayManager::DisplayManager() 
   : lastCursorX(SCREEN_WIDTH / 2),
     lastCursorY(SCREEN_HEIGHT / 2) {
