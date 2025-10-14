@@ -1,1 +1,17 @@
-
+name: Build ESP32 Firmware
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip3 install platformio
+      - run: pio run
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: .pio/build/lilygo-t-display/firmware.bin
