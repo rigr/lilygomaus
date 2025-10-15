@@ -13,6 +13,7 @@
  */
 
 #include <Arduino.h>
+#include <ArduinoOTA.h>
 #include "display.h"
 #include "mouse_handler.h"
 #include "webserver.h"
