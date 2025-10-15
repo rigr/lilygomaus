@@ -1,6 +1,6 @@
 /**
  * Mouse Handler für USB, Bluetooth Classic und BLE-Mäuse
- * Vollständige Implementierung für alle drei Typen
+ * Vereinfachte Version ohne ESP-HID Dependencies
  */
 
 #ifndef MOUSE_HANDLER_H
@@ -8,12 +8,13 @@
 
 #include <Arduino.h>
 #include <NimBLEDevice.h>
-#include <USB.h>
-#include <USBHID.h>
-#include "esp_bt_main.h"
-#include "esp_bt_device.h"
-#include "esp_gap_bt_api.h"
-#include "esp_hid_gap.h"
+
+// Bluetooth Classic (nur Basic-APIs, kein HID-Host)
+#ifdef CONFIG_BT_ENABLED
+  #include "esp_bt_main.h"
+  #include "esp_bt_device.h"
+  #include "esp_gap_bt_api.h"
+#endif
 
 // Maus-Typen
 enum MouseType {
@@ -61,14 +62,13 @@ private:
   NimBLERemoteCharacteristic* bleMouseCharacteristic;
   bool bleConnected;
   
-  // BT-Classic-spezifisch
+  // BT-Classic-spezifisch (vereinfacht ohne HID-Host)
   bool btClassicInitialized;
   bool btClassicConnected;
-  esp_bd_addr_t btClassicAddress;
+  uint8_t btClassicAddress[6];
   
   // USB-spezifisch
   bool usbConnected;
-  USBHID* usbHID;
   
   // Aktueller Maus-Typ
   MouseType currentMouseType;
@@ -84,7 +84,7 @@ private:
   void processBLEMouseReport(uint8_t* data, size_t length);
   static void notifyCallback(NimBLERemoteCharacteristic* pChar, uint8_t* pData, size_t length, bool isNotify);
   
-  // Private Methoden - BT Classic
+  // Private Methoden - BT Classic (vereinfacht)
   bool initBTClassic();
   bool connectBTClassic(const char* address);
   void disconnectBTClassic();
@@ -117,11 +117,11 @@ public:
   bool connectBLEMouse(const char* address);
   void scanBLEMice(void (*callback)(BLEMouseDevice device));
   
-  // BT-Classic-Funktionen
+  // BT-Classic-Funktionen (vereinfacht)
   bool connectBTClassicMouse(const char* address);
   void scanBTClassicMice(void (*callback)(BTClassicDevice device));
   
-  // USB-Funktionen
+  // USB-Funktionen (Stubs)
   bool connectUSBMouse();
   void scanUSBMice(void (*callback)(USBMouseDevice device));
   
