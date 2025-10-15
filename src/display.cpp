@@ -1,8 +1,3 @@
-Corrected display.cpp created
-Length: 4905
-
-=== COPY THIS ===
-
 /**
  * Display-Implementierung
  */
