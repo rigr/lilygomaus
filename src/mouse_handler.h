@@ -7,6 +7,7 @@
 #define MOUSE_HANDLER_H
 
 #include <Arduino.h>
+#include <functional>
 #include <NimBLEDevice.h>
 
 // Bluetooth Classic (nur Basic-APIs, kein HID-Host)
@@ -115,15 +116,15 @@ public:
   
   // BLE-Funktionen
   bool connectBLEMouse(const char* address);
-  void scanBLEMice(void (*callback)(BLEMouseDevice device));
+  void scanBLEMice(std::function<void(BLEMouseDevice)> callback);
   
   // BT-Classic-Funktionen (vereinfacht)
   bool connectBTClassicMouse(const char* address);
-  void scanBTClassicMice(void (*callback)(BTClassicDevice device));
+  void scanBTClassicMice(std::function<void(BTClassicDevice)> callback);
   
   // USB-Funktionen (Stubs)
   bool connectUSBMouse();
-  void scanUSBMice(void (*callback)(USBMouseDevice device));
+  void scanUSBMice(std::function<void(USBMouseDevice)> callback);
   
   // Trennen
   void disconnectMouse();
